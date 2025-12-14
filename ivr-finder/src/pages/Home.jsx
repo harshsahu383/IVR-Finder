@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import companiesData from "../data/companies";
+import CompanyCard from "../components/Companycard";
 
 function Home() {
   const [searchText, setSearchText] = useState("");
   const [results, setResults] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState([null]);
 
   function handleSearch(e) {
     e.preventDefault();
@@ -12,6 +14,7 @@ function Home() {
       company.name.toLowerCase().includes(searchText.toLowerCase())
     );
     setResults(filtered);
+    setSelectedCompany(null);
   }
 
   return (
@@ -52,36 +55,21 @@ function Home() {
         </div>
 
         {}
-        <div className="mt-10">
-          {results.length === 0 ? (
-            <p className="text-gray-500">
-              No results yet. Try searching a company.
-            </p>
-          ) : (
-            <div className="space-y-4">
-              {results.map((company) => (
-                <div
-                  key={company.id}
-                  className="border p-4 rounded-md text-left"
-                >
-                  <h3 className="text-lg font-semibold">
-                    {company.name}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {company.category}
-                  </p>
-                  <p className="mt-2">
-                    📞 <strong>{company.phone}</strong>
-                  </p>
-                  <p className="mt-1 text-blue-600">
-                    Shortcut: {company.shortcut}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
+       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  {results.length === 0 ? (
+    <p className="text-gray-500">
+      No companies found. Try searching.
+    </p>
+  ) : (
+    results.map((company) => (
+      <CompanyCard
+        key={company.id}
+        company={company}
+        onSelect={setSelectedCompany}
+      />
+    ))
+  )}
+</div>
       </main>
     </div>
   );
