@@ -1,77 +1,73 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import companiesData from "../data/companies";
-import CompanyCard from "../components/Companycard";
+import CompanyCard from "../components/CompanyCard";
+import companies from "../data/companies";
 
 function Home() {
   const [searchText, setSearchText] = useState("");
   const [results, setResults] = useState([]);
-  const [selectedCompany, setSelectedCompany] = useState([null]);
+  const [expandedCompanyId, setExpandedCompanyId] = useState(null);
 
   function handleSearch(e) {
     e.preventDefault();
-    const filtered = companiesData.filter((company) =>
+
+    const filtered = companies.filter((company) =>
       company.name.toLowerCase().includes(searchText.toLowerCase())
     );
+
     setResults(filtered);
-    setSelectedCompany(null);
+    setExpandedCompanyId(null);
+  }
+
+  function toggleCompany(companyId) {
+    setExpandedCompanyId((prev) =>
+      prev === companyId ? null : companyId
+    );
   }
 
   return (
-    <div>
+    <>
       <Navbar />
 
       <main className="max-w-4xl mx-auto mt-10 px-4 text-center">
-        {}
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Skip The IVR Maze
+        <h1 className="text-4xl font-bold mb-4">
+          Skip the IVR Maze
         </h1>
 
         <p className="text-gray-600 mb-8">
-          Find the fastest way to talk to a human in customer care
+          Find the fastest way to talk to a human
         </p>
 
         {}
-        <div className="flex justify-center">
-          <form
+        <form
           onSubmit={handleSearch}
-          className="flex gap-2 w-full max-w-lg">
-            <input
-              type="text"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              placeholder="Search Company (Airtel, Jio, Amazon..)"
-              className="flex-1 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-
-            <button
-            type="submit"
-              onClick={handleSearch}
-              className="px-6 py-3 bg-blue-900 text-white rounded-md"
-            >
-              Search
-            </button>
-            </form>
-        </div>
+          className="flex justify-center gap-2"
+        >
+          <input
+            type="text"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder="Search company (Airtel, Jio...)"
+            className="w-full max-w-md px-4 py-3 border rounded-md"
+          />
+          <button className="px-6 py-3 bg-blue-900 text-white rounded-md">
+            Search
+          </button>
+        </form>
 
         {}
-       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-  {results.length === 0 ? (
-    <p className="text-gray-500">
-      No companies found. Try searching.
-    </p>
-  ) : (
-    results.map((company) => (
-      <CompanyCard
-        key={company.id}
-        company={company}
-        onSelect={setSelectedCompany}
-      />
-    ))
-  )}
-</div>
+        <div className="mt-10 space-y-6">
+          {Array.isArray(results) && results.map((company) => (
+            <CompanyCard
+              key={company.id}
+              company={company}
+              isExpanded={expandedCompanyId === company.id}
+              onToggle={toggleCompany}
+            />
+          ))}
+        </div>
       </main>
-    </div>
+    </>
   );
 }
 

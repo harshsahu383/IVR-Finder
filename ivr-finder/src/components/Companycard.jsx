@@ -1,30 +1,45 @@
-function CompanyCard({ company, onSelect }) {
+import ServiceCard from "./Servicecard.jsx";
+
+function CompanyCard({ company, isExpanded, onToggle }) {
   return (
-    <div className="bg-white border rounded-xl p-5 shadow-sm hover:shadow-md transition">
+    <div className="bg-white border rounded-xl p-5 shadow-sm">
       
-     {}
-      <img
-        src={company.logo}
-        alt={company.name}
-        className="w-16 h-16 mx-auto object-contain mb-4"
-      />
+      {}
+      <div className="flex items-center gap-4">
+        <img
+          src={company.logo}
+          alt={company.name}
+          className="w-14 h-14 object-contain"
+        />
+
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold">
+            {company.name}
+          </h3>
+          <p className="text-sm text-gray-500">
+            {company.category}
+          </p>
+        </div>
+
+        <button
+          onClick={() => onToggle(company.id)}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md"
+        >
+          {isExpanded ? "Hide Services" : "View Services"}
+        </button>
+      </div>
 
       {}
-      <h3 className="text-lg font-semibold text-center">
-        {company.name}
-      </h3>
-
-      <p className="text-sm text-gray-500 text-center mb-4">
-        {company.category}
-      </p>
-
-      {}
-      <button
-        onClick={() => onSelect(company)}
-        className="w-full py-2 bg-blue-600 text-white rounded-md"
-      >
-        View Services
-      </button>
+      {isExpanded && Array.isArray(company.services) && (
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {company.services.map((service) => (
+            <ServiceCard
+              key={service.id}
+              service={service}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
