@@ -50,7 +50,7 @@ function Home() {
             placeholder="Search company (Airtel, Jio...)"
             className="w-full max-w-md px-4 py-3 border rounded-md"
           />
-          <button className="px-6 py-3 bg-blue-900 text-white rounded-md TEXT">
+          <button className="px-6 py-3 bg-blue-900 text-white rounded-md">
             Search
           </button>
         </form>
