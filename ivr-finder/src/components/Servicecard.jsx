@@ -1,11 +1,11 @@
 function ServiceCard({ service }) {
   return (
-    <div className="border rounded-lg p-4 bg-gray-50">
+    <div className="border rounded-xl bg-white  p-4 shadow-sm hover:shadow-md transition">
       <h4 className="font-semibold">
         {service.serviceName}
       </h4>
 
-      <p className="text-sm text-gray-600 mt-1">
+      <p className="text-sm text-gray-500 ">
         📞 {service.phone}
       </p>
 

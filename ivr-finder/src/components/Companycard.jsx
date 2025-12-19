@@ -2,7 +2,7 @@ import ServiceCard from "./Servicecard.jsx";
 
 function CompanyCard({ company, isExpanded, onToggle }) {
   return (
-    <div className="bg-white border rounded-xl p-5 shadow-sm">
+    <div className="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition">
       
       {}
       <div className="flex items-center gap-4">
@@ -23,7 +23,7 @@ function CompanyCard({ company, isExpanded, onToggle }) {
 
         <button
           onClick={() => onToggle(company.id)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md"
+          className="px-4 py-2 bg-blue-600 font-medium text-white rounded-lg text-sm hover:bg-blue-700 transition"
         >
           {isExpanded ? "Hide Services" : "View Services"}
         </button>

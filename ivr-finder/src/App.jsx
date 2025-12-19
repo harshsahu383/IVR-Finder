@@ -1,7 +1,10 @@
 import Home from './pages/Home';  
 function App() {
   return (
-    <Home />
+    <div className="min-h-screen bg-gray-50">
+      <Home />
+    </div>
+    
   );
 }
 
